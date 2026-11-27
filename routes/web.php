@@ -26,3 +26,9 @@ Route::get('/sales/{sale}/receipt', function (Sale $sale) {
     $sale->load('items.part');
     return view('receipt', compact('sale'));
 })->middleware('auth')->name('sales.receipt');
+// Walk-In POS Terminal & POS Receipt
+Route::middleware('auth')->group(function () {
+    Route::get('/pos', [\App\Http\Controllers\PosController::class, 'index'])->name('pos.index');
+    Route::post('/pos/checkout', [\App\Http\Controllers\PosController::class, 'checkout'])->name('pos.checkout');
+    Route::get('/pos/sales/{sale}/receipt', [\App\Http\Controllers\PosController::class, 'receipt'])->name('pos.receipt');
+});

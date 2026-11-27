@@ -11,14 +11,21 @@ class SaleItem extends Model
         'sale_id',
         'part_id',
         'quantity',
+        'cost_price',
         'unit_price',
         'subtotal',
     ];
 
     protected $casts = [
+        'cost_price' => 'decimal:2',
         'unit_price' => 'decimal:2',
         'subtotal' => 'decimal:2',
     ];
+
+    public function getSellingPriceAttribute()
+    {
+        return $this->unit_price;
+    }
 
     protected static function booted(): void
     {
